@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-6"></div>
+  <div class="col-6 text-end">
+    <button class="btn btn-sm btn-success" (click)="addRow()">Add Row</button>
+  </div>
+</div>
+<div class="pt-2">
+  <form>
+    <table class="table table-bordered">
+      <thead>
+        <tr class="text-uppercase table-dark">
+          <th scope="col">Client</th>
+          <th scope="col">Contract Roles</th>
+          <th scope="col">Account Manager</th>
+          <th scope="col">Recruiter(s)</th>
+                  </tr>
+      </thead>
+      <tbody [formGroup]="employeeForm">
+        <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls; let i=index">
+          <tr [formGroupName]="i">
+            <td>
+              <input type="text" class="form-control" formControlName="Client" placeholder="Client">
+              <div class="text-danger" *ngIf="getFormControls.controls[i].get('Client')?.touched">
+                <span *ngIf="getFormControls.controls[i].get('Client')?.errors?.['required']">Required</span>
+                <span *ngIf="getFormControls.controls[i].get('Client')?.errors?.['minlength']">3 Chars
+                  Required</span>
+              </div>
+            </td>
+            <td>
+              <input type="text" class="form-control" formControlName="Contract Roles" placeholder="Contract Roles">
+              <div class="text-black" *ngIf="getFormControls.controls[i].get('Contract Roles')?.touched">
+                <span *ngIf="getFormControls.controls[i].get('Contract Roles')?.errors?.['required']">Required</span>
+              </div>
+            </td>
+            <td>
+              <input type="text" class="form-control" formControlName="Account Manager" placeholder="Account Manager">
+              <div class="text-danger" *ngIf="getFormControls.controls[i].get('Account Manager')?.touched">
+                <span *ngIf="getFormControls.controls[i].get('Account Manager')?.errors?.['required']">Required</span>
+              </div>
+            </td>
+            <td>
+              <input type="text" class="form-control" formControlName="Search Recruiter" placeholder="Search Recruiter">
+              <div class="text-danger" *ngIf="getFormControls.controls[i].get('Search Recruiter')?.touched">
+                <span *ngIf="getFormControls.controls[i].get('Search Recruiter')?.errors?.['required']">Required</span>
+              </div>
+            </td>
+                        <td>
+              <button class="btn btn-danger" (click)="removeEmployee(i)">Remove</button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container>
+          <tr>
+            <td colspan="7">
+              <div class="row">
+                <div class="col-12 text-center">
+                  <button class="btn btn-success" [disabled]="employeeForm.invalid" (click)="onSaveForm()">Save Bulk Employee</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </form>
+</div>
